@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{25AA689C-8312-4A43-BC0C-8D3AD35592D5}</ProjectGuid>
+    <ProjectGuid>{DF1CF0FC-5B18-49DE-960F-489A28FBA138}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>opencv_color_rgb_pixel</RootNamespace>
+    <RootNamespace>opencv_color_rgb_pixel_bin</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -149,7 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="opencv_color_rgb_pixel.cpp" />
+    <ClCompile Include="opencv_color_rgb_pixel_bin.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
