@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <vector>
 #include <cstdlib>
+#include <stdexcept>
 using namespace cv;
 using namespace std;
 void calChannel(const vector<int>& colorValue, int totalNumPixels)
@@ -32,14 +33,23 @@ int main(int argc, char *argv[])
 	vector<int> greenChannel(numBin, 0);
 	vector<int> blueChannel(numBin, 0);
 	int totalNumPixels{ input_img.rows*input_img.cols };
-	for (int i{}; i < input_img.rows; i++)
-		for (int j{}; j < input_img.cols; j++)
-		{
-			pixel[i][j] = input_img.at<Vec3b>(i, j);
-			blueChannel[(unsigned int)(pixel[i][j][0] / binRange)]++;
-			greenChannel[(unsigned int)(pixel[i][j][1] / binRange)]++;
-			redChannel[(unsigned int)(pixel[i][j][2] / binRange)]++;
-		}
+	try
+	{
+		for (int i{}; i < input_img.rows; i++)
+			for (int j{}; j < input_img.cols; j++)
+			{
+				pixel[i][j] = input_img.at<Vec3b>(i, j);
+				blueChannel.at((unsigned int)(pixel[i][j][0] / binRange))++;
+				greenChannel.at((unsigned int)(pixel[i][j][1] / binRange))++;
+				redChannel.at((unsigned int)(pixel[i][j][2] / binRange))++;
+			}
+	}
+	catch (const out_of_range& error)
+	{
+		cerr << " So luong bin khong hop le ....." << error.what() << endl;
+		return 1;
+	}
+	//--------------------------------------------------------------------------------------------------
 	cout << "Blue Channel:--------------------------------------------- " << endl;
 	calChannel(blueChannel, totalNumPixels);
 	cout << "Green Channel:-------------------------------------------- " << endl;
