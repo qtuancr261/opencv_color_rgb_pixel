@@ -1,16 +1,16 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include <iomanip>
 #include <vector>
+#include <cstdlib>
 using namespace cv;
 using namespace std;
-void calChannel(const vector<int>& colorValue)
+void calChannel(const vector<int>& colorValue, int totalNumPixels)
 {
 	for (int i{}; i < colorValue.size(); i++)
 	{
-		cout << left << setw(6) << "bin " << setw(3) << i << ": " << setw(6) << colorValue[i] << "| ";
-		if (i % 8 == 0) cout << endl;
+		cout << left << setw(6) << "bin " << setw(5) << i << ": " << setw(6) << colorValue[i] << "/" << setw(8) << totalNumPixels << " | " << endl;
 	}
-	cout << endl;
 }
 
 int main(int argc, char *argv[])
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 	if (input_img.empty())
 	{
 		cerr << "Couldn't open image . Exit program...................." << endl;
-		return -1;
+		return 1;
 	}
 	//--------------------------------------------------------------------------------------------
 	int numBin{};
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	vector<int> redChannel(numBin, 0);
 	vector<int> greenChannel(numBin, 0);
 	vector<int> blueChannel(numBin, 0);
-	int countPixels{};
+	int totalNumPixels{ input_img.rows*input_img.cols };
 	for (int i{}; i < input_img.rows; i++)
 		for (int j{}; j < input_img.cols; j++)
 		{
@@ -40,14 +40,15 @@ int main(int argc, char *argv[])
 			greenChannel[(unsigned int)(pixel[i][j][1] / binRange)]++;
 			redChannel[(unsigned int)(pixel[i][j][2] / binRange)]++;
 		}
-	cout << "Blue Channel: " << endl;
-	calChannel(blueChannel);
-	cout << "Green Channel: " << endl;
-	calChannel(greenChannel);
-	cout << "Red Channel" << endl;
-	calChannel(redChannel);
+	cout << "Blue Channel:--------------------------------------------- " << endl;
+	calChannel(blueChannel, totalNumPixels);
+	cout << "Green Channel:-------------------------------------------- " << endl;
+	calChannel(greenChannel, totalNumPixels);
+	cout << "Red Channel:----------------------------------------------" << endl;
+	calChannel(redChannel, totalNumPixels);
 	namedWindow(argv[1], WINDOW_AUTOSIZE);
 	imshow(argv[1], input_img);
 	waitKey();
+	system("cls");
 	return 0;
 }
